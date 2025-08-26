@@ -8,15 +8,27 @@ import re
 app = FastAPI(title="PDF Text Extractor")
 
 def clean_text(text: str) -> str:
-    """Clean extracted text."""
+    """Clean extracted text, including Arabic normalization."""
     if not text:
         return ""
+    
     # Replace form feed (page breaks) with newline
     text = text.replace("\x0c", "\n")
+    
     # Replace multiple newlines with a single newline
     text = re.sub(r"\n+", "\n", text)
+    
+    # Remove Tatweel characters
+    text = text.replace("ـ", "")
+    
+    # Collapse repeated letters (3 or more) to a single letter
+    text = re.sub(r'(.)\1{2,}', r'\1', text)
+    
     # Strip leading/trailing whitespace
-    return text.strip()
+    text = text.strip()
+    
+    return text
+
     
 @app.get("/")
 async def root():
