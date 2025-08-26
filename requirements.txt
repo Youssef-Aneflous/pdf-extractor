@@ -1,5 +1,8 @@
 python-multipart
 fastapi
 uvicorn[standard]
-pdfminer.six
-pdfplumber
+tesseract-ocr 
+tesseract-ocr-ara
+pytesseract 
+pillow
+pymupdf
