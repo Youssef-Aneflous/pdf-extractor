@@ -1,8 +1,5 @@
-python-multipart
 fastapi
-uvicorn[standard]
-tesseract-ocr 
-tesseract-ocr-ara
-pytesseract 
+uvicorn
+pytesseract
 pillow
-pymupdf
+PyMuPDF
