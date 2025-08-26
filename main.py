@@ -24,19 +24,16 @@ async def root():
  
 @app.post("/extract")
 async def extract_pdf(file: UploadFile = File(...)):
-    if file.content_type != "application/pdf":
-        raise HTTPException(status_code=400, detail="File must be a PDF")
-    
     try:
         # Read the PDF
         with pdfplumber.open(file.file) as pdf:
             text_pages = [page.extract_text() for page in pdf.pages]
         
-        # Combine all pages and clean
         full_text = "\n".join(filter(None, text_pages))
         cleaned_text = clean_text(full_text)
 
-        return JSONResponse(content={"text": cleaned_text})
+        return {"text": cleaned_text}
 
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error extracting PDF: {str(e)}")
+        raise HTTPException(status_code=400, detail=f"Cannot process file: {str(e)}")
+
