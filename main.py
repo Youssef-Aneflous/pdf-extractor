@@ -4,6 +4,10 @@ import tempfile
 
 app = FastAPI()
 
+@app.get("/")
+async def root():
+    return {"message": "PDF Extractor service is running"}
+    
 @app.post("/extract")
 async def extract_pdf(file: UploadFile = File(...)):
     # Save uploaded file temporarily
